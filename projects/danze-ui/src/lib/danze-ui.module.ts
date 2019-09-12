@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
-import { DanzeUiComponent } from './danze-ui.component';
+import { ButtonModule } from './button/button.module';
 
 @NgModule({
-  declarations: [DanzeUiComponent],
+  declarations: [],
   imports: [
+    ButtonModule
   ],
-  exports: [DanzeUiComponent]
+  exports: [
+    ButtonModule
+  ]
 })
 export class DanzeUiModule { }
