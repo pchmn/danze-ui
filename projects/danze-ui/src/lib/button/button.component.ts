@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Color } from '../utils/color.enum';
 import { Position } from '../utils/position.enum';
 import { Size } from '../utils/size.enum';
@@ -15,7 +15,7 @@ const BUTTON_TYPE_ATTRIBUTES = [
   styleUrls: ['./button.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
 
   @Input() color: Color = Color.Primary;
   @Input() size: Size = Size.Medium;
@@ -28,12 +28,31 @@ export class ButtonComponent implements OnInit {
     this.addClasses();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.color && changes.color.currentValue !== changes.color.previousValue) {
+      this.removeClassesFromHostElement(`btn-${changes.color.previousValue}`);
+      this.addClassesToHostElement(`btn-${changes.color.currentValue}`);
+    }
+    if (changes.size && changes.size.currentValue !== changes.size.previousValue) {
+      this.removeClassesFromHostElement(changes.size.previousValue);
+      this.addClassesToHostElement(changes.size.currentValue);
+    }
+    if (changes.iconPosition && changes.iconPosition.currentValue !== changes.iconPosition.previousValue) {
+      this.removeClassesFromHostElement(`icon-${changes.iconPosition.previousValue}`);
+      this.addClassesToHostElement(`icon-${changes.iconPosition.currentValue}`);
+    }
+  }
+
   private getHostElement(): HTMLElement {
     return this.elementRef.nativeElement as HTMLElement;
   }
 
   private addClassesToHostElement(...classes: string[]) {
     classes.forEach(className => this.getHostElement().classList.add(className));
+  }
+
+  private removeClassesFromHostElement(...classes: string[]) {
+    classes.forEach(className => this.getHostElement().classList.remove(className));
   }
 
   private addClasses() {
