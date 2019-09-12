@@ -49,7 +49,9 @@ export class ButtonComponent implements OnInit {
 
   private getClasseName(attr: string) {
     if (attr.includes('outline')) {
+      // If outline, remove btn-color class
       this.getHostElement().classList.remove(`btn-${this.color}`);
+      // If outline and round, add dz-round-button class
       if (attr === 'dz-round-outline-button') {
         this.addClassesToHostElement('dz-round-button');
       }
