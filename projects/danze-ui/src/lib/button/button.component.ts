@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewEnc
 import { Color } from '../utils/color.enum';
 import { Position } from '../utils/position.enum';
 import { Size } from '../utils/size.enum';
+import { BaseComponent } from './../base.component';
 
 const BUTTON_TYPE_ATTRIBUTES = [
   "dz-round-button",
@@ -15,13 +16,14 @@ const BUTTON_TYPE_ATTRIBUTES = [
   styleUrls: ['./button.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() color: Color = Color.Primary;
   @Input() size: Size = Size.Medium;
   @Input() iconPosition: Position.Left | Position.Right = Position.Left;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(protected elementRef: ElementRef) {
+    super(elementRef);
   }
 
   ngOnInit() {
@@ -41,18 +43,6 @@ export class ButtonComponent implements OnInit, OnChanges {
       this.removeClassesFromHostElement(`icon-${changes.iconPosition.previousValue}`);
       this.addClassesToHostElement(`icon-${changes.iconPosition.currentValue}`);
     }
-  }
-
-  private getHostElement(): HTMLElement {
-    return this.elementRef.nativeElement as HTMLElement;
-  }
-
-  private addClassesToHostElement(...classes: string[]) {
-    classes.forEach(className => this.getHostElement().classList.add(className));
-  }
-
-  private removeClassesFromHostElement(...classes: string[]) {
-    classes.forEach(className => this.getHostElement().classList.remove(className));
   }
 
   private addClasses() {
