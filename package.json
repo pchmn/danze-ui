@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test-library": "ng test danze-ui",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -19,6 +20,8 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "@fortawesome/fontawesome-free": "^5.10.2",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
